@@ -26,3 +26,16 @@ tasks.test {
 tasks.war {
     webAppDirectory = file("src/main/webapp")
 }
+
+var catalinaHome: String? = System.getenv("CATALINA_HOME")
+var tomcatWebappsDirectory = file("${catalinaHome}/webapps/")
+
+tasks.register<Copy>("deployToTomcat") {
+    dependsOn(tasks.named("war"))
+
+    val warTask = tasks.named<War>("war")
+    from(warTask.map { it.archiveFile.get().asFile })
+
+    into(tomcatWebappsDirectory)
+    rename { "Lab2Cinema.war" }
+}
