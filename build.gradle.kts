@@ -13,7 +13,7 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.2")
+    implementation("log4j:log4j:1.2.16")
     implementation("org.xerial:sqlite-jdbc:3.49.1.0")
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly("javax.servlet:javax.servlet-api:3.0.1")
