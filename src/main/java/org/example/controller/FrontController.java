@@ -1,30 +1,52 @@
 package org.example.controller;
 
+import org.example.command.Command;
+import org.example.command.CommandManager;
+
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class FrontController extends HttpServlet {
+    private final CommandManager commands = new CommandManager();
+    private final Logger logger = Logger.getLogger(FrontController.class);
 
     @Override
     public void init() throws ServletException {
         super.init();
-
-        System.out.println("FrontController: Initialized");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=UTF-8");
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.getWriter().println("<p>hello</p>");
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+    }
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info(request.getRequestURI());
+
+        String method = request.getMethod().toLowerCase();
+        String commandName = request.getRequestURI().replaceFirst("/Lab2Cinema/", "");
+
+        logger.info(method + " " + commandName);
+
+        Command command = commands.getCommand(method, commandName);
+
+        if (command == null) {
+            // TODO: proper 404 page
+            response.getWriter().println("Not found");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        } else {
+            String pagePath = command.execute(request, response);
+            request.getRequestDispatcher(pagePath).forward(request, response);
+        }
     }
 }
