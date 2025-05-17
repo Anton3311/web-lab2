@@ -1,4 +1,4 @@
-package org.example.command;
+package org.example.controller.command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

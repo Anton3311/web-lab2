@@ -1,7 +1,7 @@
 package org.example.controller;
 
-import org.example.command.Command;
-import org.example.command.CommandManager;
+import org.example.controller.command.Command;
+import org.example.controller.command.CommandManager;
 
 import org.apache.log4j.Logger;
 
