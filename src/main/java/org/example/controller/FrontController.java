@@ -41,9 +41,8 @@ public class FrontController extends HttpServlet {
         Command command = commands.getCommand(method, commandName);
 
         if (command == null) {
-            // TODO: proper 404 page
-            response.getWriter().println("Not found");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            request.getRequestDispatcher("/WEB-INF/view/error/notFound.jsp").forward(request, response);
         } else {
             String pagePath = command.execute(request, response);
             request.getRequestDispatcher(pagePath).forward(request, response);
