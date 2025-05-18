@@ -5,7 +5,6 @@ import org.example.model.dao.exception.DaoException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
 import java.util.Properties;
 
 public abstract class DaoFactory {
@@ -13,7 +12,7 @@ public abstract class DaoFactory {
     private static final String DB_FACTORY_CLASS = "factory.class";
     private static DaoFactory instance;
 
-    public abstract Connection getConnection();
+    public abstract DaoConnection getConnection();
 
     public static DaoFactory getInstance() {
         if (instance == null) {
@@ -35,6 +34,6 @@ public abstract class DaoFactory {
         return instance;
     }
 
-    public abstract MovieDao createMovieDao();
-    public abstract TicketDao createTicketDao();
+    public abstract MovieDao createMovieDao(DaoConnection connection);
+    public abstract TicketDao createTicketDao(DaoConnection connection);
 }

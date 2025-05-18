@@ -1,7 +1,6 @@
 package org.example.controller.command;
 
 import org.apache.log4j.Logger;
-import org.example.model.dao.DaoFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,8 +9,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.example.model.entity.Movie;
+import org.example.model.service.MovieService;
 import org.example.utils.AttributeConstants;
-import org.example.utils.URIUtils;
 import org.example.utils.ViewPathConstants;
 
 public class BuyTicket implements Command {
@@ -19,7 +18,7 @@ public class BuyTicket implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Movie> movie = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
+        Optional<Movie> movie = MovieService.getMovieIdFromURI(request.getRequestURI());
 
         if (movie.isPresent()) {
             request.setAttribute(AttributeConstants.MOVIE_NAME, movie.get().getName());

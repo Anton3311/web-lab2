@@ -4,6 +4,7 @@ import org.example.controller.FrontController;
 import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
+import org.example.model.service.MovieService;
 import org.example.model.service.TicketService;
 import org.example.model.service.exception.ServiceException;
 import org.example.utils.*;
@@ -38,7 +39,7 @@ public class UpdateTicket implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Movie> movie = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
+        Optional<Movie> movie = MovieService.getMovieIdFromURI(request.getRequestURI());
         if (movie.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return ViewPathConstants.MOVIE_NOT_FOUND;

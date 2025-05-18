@@ -1,10 +1,10 @@
 package org.example.model.dao.jdbc;
 
+import org.example.model.dao.DaoConnection;
 import org.example.model.dao.MovieDao;
 import org.example.model.dao.exception.DaoException;
 import org.example.model.entity.Movie;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,15 +15,15 @@ public class JdbcMovieDao implements MovieDao {
     private static final int ID_COLUMN_INDEX = 1;
     private static final int NAME_COLUMN_INDEX = 2;
     private static final int SEAT_COUNT_COLUMN_INDEX = 3;
-    private final Connection connection;
+    private final DaoConnection connection;
 
-    public JdbcMovieDao(Connection connection) {
+    public JdbcMovieDao(DaoConnection connection) {
         this.connection = connection;
     }
 
     @Override
     public Optional<Movie> findMovieByName(String name) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement("select * from movies where movies.name = ? limit 1")) {
+        try (PreparedStatement statement = connection.getConnection().prepareStatement("select * from movies where movies.name = ? limit 1")) {
             statement.setString(1, name);
 
             ResultSet result = statement.executeQuery();
@@ -43,7 +43,7 @@ public class JdbcMovieDao implements MovieDao {
 
     @Override
     public Optional<Movie> findMovieById(int id) throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement("select * from movies where movies.id = ? limit 1")) {
+        try (PreparedStatement statement = connection.getConnection().prepareStatement("select * from movies where movies.id = ? limit 1")) {
             statement.setInt(1, id);
 
             ResultSet result = statement.executeQuery();
@@ -63,7 +63,7 @@ public class JdbcMovieDao implements MovieDao {
 
     @Override
     public ArrayList<Movie> findAllMovies() throws DaoException {
-        try (PreparedStatement statement = connection.prepareStatement("select * from movies")) {
+        try (PreparedStatement statement = connection.getConnection().prepareStatement("select * from movies")) {
             ResultSet results = statement.executeQuery();
 
             ArrayList<Movie> movies = new ArrayList<>();

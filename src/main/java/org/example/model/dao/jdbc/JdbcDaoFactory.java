@@ -1,6 +1,7 @@
 package org.example.model.dao.jdbc;
 
 import org.apache.log4j.Logger;
+import org.example.model.dao.DaoConnection;
 import org.example.model.dao.DaoFactory;
 import org.example.model.dao.MovieDao;
 import org.example.model.dao.TicketDao;
@@ -8,7 +9,6 @@ import org.example.model.dao.exception.DaoException;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
@@ -25,21 +25,21 @@ public class JdbcDaoFactory extends DaoFactory {
     }
 
     @Override
-    public Connection getConnection() {
+    public DaoConnection getConnection() {
         try {
-            return dataSource.getConnection();
+            return new JdbcDaoConnection(dataSource.getConnection());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public MovieDao createMovieDao() {
-        return new JdbcMovieDao(getConnection());
+    public MovieDao createMovieDao(DaoConnection connection) {
+        return new JdbcMovieDao(connection);
     }
 
     @Override
-    public TicketDao createTicketDao() {
-        return new JdbcTicketDao(getConnection());
+    public TicketDao createTicketDao(DaoConnection connection) {
+        return new JdbcTicketDao(connection);
     }
 }

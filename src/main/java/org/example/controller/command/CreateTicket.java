@@ -5,6 +5,7 @@ import org.example.controller.FrontController;
 import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
+import org.example.model.service.MovieService;
 import org.example.model.service.TicketService;
 import org.example.utils.*;
 
@@ -23,7 +24,7 @@ public class CreateTicket implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
 
-        Optional<Movie> movieFromURI = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
+        Optional<Movie> movieFromURI = MovieService.getMovieIdFromURI(request.getRequestURI());
 
         if (movieFromURI.isPresent()) {
             Movie movie = movieFromURI.get();

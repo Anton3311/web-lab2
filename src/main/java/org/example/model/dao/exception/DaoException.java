@@ -5,6 +5,10 @@ public class DaoException extends RuntimeException {
         super(message);
     }
 
+    public DaoException(String message, Exception cause) {
+        super(message, cause);
+    }
+
     public DaoException(Exception cause) {
         super("Dau Error", cause);
     }

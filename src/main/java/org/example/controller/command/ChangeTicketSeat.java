@@ -2,6 +2,7 @@ package org.example.controller.command;
 
 import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
+import org.example.model.service.MovieService;
 import org.example.utils.AttributeConstants;
 import org.example.utils.URIUtils;
 import org.example.utils.ViewPathConstants;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class ChangeTicketSeat implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Movie> movie = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
+        Optional<Movie> movie = MovieService.getMovieIdFromURI(request.getRequestURI());
 
         if (movie.isEmpty()) {
             return ViewPathConstants.MOVIE_NOT_FOUND;
