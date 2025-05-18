@@ -81,6 +81,11 @@ public class UpdateTicket implements Command {
             return false;
         }
 
+        if (updateParameters.getNewSeat() <= 0 || updateParameters.getNewSeat() > movie.getSeatCount()) {
+            errors.add(String.format("New seat number must be > 0 and < %d", movie.getSeatCount()));
+            return false;
+        }
+
         boolean newTicketExists = TicketService.ticketExists(movie.getId(), updateParameters.getNewSeat());
         if (newTicketExists) {
             errors.add(String.format("Ticket to a movie '%s' with a seat %d is already taken",
