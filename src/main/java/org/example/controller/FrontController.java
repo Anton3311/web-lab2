@@ -16,6 +16,8 @@ public class FrontController extends HttpServlet {
     private final CommandManager commands = new CommandManager();
     private final Logger logger = Logger.getLogger(FrontController.class);
 
+    public static final String REDIRECT = "redirect";
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -38,6 +40,9 @@ public class FrontController extends HttpServlet {
 
         String method = request.getMethod().toLowerCase();
         String commandName = request.getRequestURI().replaceFirst("/Lab2Cinema/", "");
+        if (commandName.endsWith("/")) {
+            commandName = commandName.substring(0, commandName.length() - 2);
+        }
 
         logger.info(method + " " + commandName);
 
@@ -48,7 +53,10 @@ public class FrontController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/error/notFound.jsp").forward(request, response);
         } else {
             String pagePath = command.execute(request, response);
-            request.getRequestDispatcher(pagePath).forward(request, response);
+
+            if (!pagePath.equals(REDIRECT)) {
+                request.getRequestDispatcher(pagePath).forward(request, response);
+            }
         }
     }
 }

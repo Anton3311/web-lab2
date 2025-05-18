@@ -1,11 +1,13 @@
 package org.example.controller.command;
 
 import org.apache.log4j.Logger;
+import org.example.controller.FrontController;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
 import org.example.model.service.MovieService;
 import org.example.model.service.TicketService;
 import org.example.utils.AttributeConstants;
+import org.example.utils.PagePathConstants;
 import org.example.utils.ParameterNameConstants;
 
 import javax.servlet.ServletException;
@@ -28,7 +30,8 @@ public class CreateTicket implements Command {
             logger.info("Created ticket " + ticket);
 
             response.setStatus(HttpServletResponse.SC_CREATED);
-            return "";
+            response.sendRedirect(PagePathConstants.MOVIES_PAGE);
+            return FrontController.REDIRECT;
         } else {
             logger.error("Cannot create ticket");
             errors.forEach(logger::error);
