@@ -3,6 +3,7 @@ package org.example.controller.command;
 import org.apache.log4j.Logger;
 import org.example.model.service.MovieService;
 import org.example.utils.AttributeConstants;
+import org.example.utils.PagePathConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,6 @@ public class GetMovies implements Command {
         });
 
         request.setAttribute(AttributeConstants.MOVIES, movies);
-        return "/WEB-INF/view/movie/movies.jsp";
+        return PagePathConstants.MOVIES_PAGE;
     }
 }

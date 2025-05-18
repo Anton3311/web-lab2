@@ -6,10 +6,7 @@ import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
 import org.example.model.service.TicketService;
-import org.example.utils.AttributeConstants;
-import org.example.utils.PagePathConstants;
-import org.example.utils.ParameterNameConstants;
-import org.example.utils.URIUtils;
+import org.example.utils.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,11 +43,11 @@ public class CreateTicket implements Command {
                 request.setAttribute(AttributeConstants.ERRORS, errors);
                 request.setAttribute(AttributeConstants.HAS_ERRORS, !errors.isEmpty());
 
-                return "/WEB-INF/view/ticket/buyTicket.jsp";
+                return ViewPathConstants.BUY_TICKET;
             }
         } else {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return "/WEB-INF/view/error/movieNotFound.jsp";
+            return ViewPathConstants.MOVIE_NOT_FOUND;
         }
     }
 

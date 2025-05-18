@@ -5,6 +5,7 @@ import org.example.controller.command.CommandManager;
 
 import org.apache.log4j.Logger;
 import org.example.model.dao.DaoFactory;
+import org.example.utils.ViewPathConstants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,13 +45,13 @@ public class FrontController extends HttpServlet {
             commandName = commandName.substring(0, commandName.length() - 1);
         }
 
-        logger.info(method + " " + commandName);
+        logger.info("Command Key: " + method + " " + commandName);
 
         Command command = commands.getCommand(method, commandName);
 
         if (command == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            request.getRequestDispatcher("/WEB-INF/view/error/notFound.jsp").forward(request, response);
+            request.getRequestDispatcher(ViewPathConstants.PAGE_NOT_FOUND).forward(request, response);
         } else {
             String pagePath = command.execute(request, response);
 
