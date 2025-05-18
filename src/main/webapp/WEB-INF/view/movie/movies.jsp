@@ -7,7 +7,7 @@
         <div>
             <p><c:out value="${movie.name}"/></p>
             <a href="${PagePathConstants.BUY_TICKET}${movie.id}"><button>Buy Ticket</button></a>
-            <a><button>Return Ticket</button></a>
+            <a href="${PagePathConstants.RETURN_TICKET}${movie.id}"><button>Return Ticket</button></a>
         </div>
     </c:forEach>
 </body>

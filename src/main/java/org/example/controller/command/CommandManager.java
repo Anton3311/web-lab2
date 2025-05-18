@@ -16,6 +16,9 @@ public class CommandManager {
 
         commands.put(createCommandKey("get", "cinema/buyTicket"), new BuyTicket());
         commands.put(createCommandKey("post", "cinema/buyTicket"), new CreateTicket());
+
+        commands.put(createCommandKey("get", "cinema/returnTicket"), new ReturnTicket());
+        commands.put(createCommandKey("post", "cinema/returnTicket"), new DeleteTicket());
     }
 
     private String createCommandKey(String method, String commandName) {

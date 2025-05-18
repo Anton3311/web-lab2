@@ -5,16 +5,16 @@
     <%@include file="../header.jsp"%>
 
     <h2>
-        <c:out value="Buy a ticket to ${requestScope[AttributeNameConstants.MOVIE_NAME]}" />
+        <c:out value="Return ticket to ${requestScope[AttributeNameConstants.MOVIE_NAME]}" />
     </h2>
 
     <form method="post">
         <input type="number" name="${ParameterNameConstants.SEAT_NUMBER}" placeholder="Seat Number">
-        <button type="submit">Buy</button>
+        <button type="submit">Return ticket</button>
     </form>
 
     <c:if test="${requestScope[AttributeConstants.HAS_ERRORS]}">
-        <p class="error">Cannot buy a ticket</p>
+        <p class="error">Cannot return a ticket</p>
         <div>
             <c:forEach var="error" items="${requestScope[AttributeConstants.ERRORS]}">
                 <p class="error"><c:out value="${error}" /></p>

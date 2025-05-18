@@ -2,13 +2,14 @@ package org.example.controller.command;
 
 import org.apache.log4j.Logger;
 import org.example.controller.FrontController;
+import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
-import org.example.model.service.MovieService;
 import org.example.model.service.TicketService;
 import org.example.utils.AttributeConstants;
 import org.example.utils.PagePathConstants;
 import org.example.utils.ParameterNameConstants;
+import org.example.utils.URIUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class CreateTicket implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
 
-        Optional<Movie> movieFromURI = getMovieFromURI(request.getRequestURI());
+        Optional<Movie> movieFromURI = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
 
         if (movieFromURI.isPresent()) {
             Movie movie = movieFromURI.get();
@@ -51,16 +52,6 @@ public class CreateTicket implements Command {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "/WEB-INF/view/error/movieNotFound.jsp";
         }
-    }
-
-    private Optional<Movie> getMovieFromURI(String uri) {
-        try {
-            int movieId = Integer.parseInt(uri.substring(uri.lastIndexOf("/") + 1));
-
-            return MovieService.getById(movieId);
-        } catch (NumberFormatException _) {}
-
-        return Optional.empty();
     }
 
     private Ticket createTicketFromRequest(Movie movie, HttpServletRequest request, ArrayList<String> errors) {

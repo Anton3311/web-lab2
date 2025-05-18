@@ -1,5 +1,6 @@
 package org.example.controller.command;
 
+import org.example.model.dao.DaoFactory;
 import org.example.model.service.MovieService;
 
 import javax.servlet.ServletException;
@@ -9,25 +10,19 @@ import java.io.IOException;
 import java.util.Optional;
 import org.example.model.entity.Movie;
 import org.example.utils.AttributeConstants;
+import org.example.utils.URIUtils;
+import org.example.utils.ViewPathConstants;
 
 public class BuyTicket implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<Movie> movie = Optional.empty();
-
-        try {
-            String uri = request.getRequestURI();
-            int movieId = Integer.parseInt(uri.substring(uri.lastIndexOf("/") + 1));
-
-            movie = MovieService.getById(movieId);
-        } catch (NumberFormatException _) {
-        }
+        Optional<Movie> movie = URIUtils.getMovieIdFromURI(request.getRequestURI(), DaoFactory.getInstance().createMovieDao());
 
         if (movie.isPresent()) {
             request.setAttribute(AttributeConstants.MOVIE_NAME, movie.get().getName());
-            return "/WEB-INF/view/ticket/buyTicket.jsp";
+            return ViewPathConstants.BUY_TICKET;
         } else {
-            return "/WEB-INF/view/error/movieNotFound.jsp";
+            return ViewPathConstants.MOVIE_NOT_FOUND;
         }
     }
 }

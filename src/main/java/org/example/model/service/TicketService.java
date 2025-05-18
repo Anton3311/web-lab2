@@ -10,6 +10,10 @@ public class TicketService {
         return daoFactory.createTicketDao().ticketExists(movieId, seatNumber);
     }
 
+    public static void deleteTicket(Ticket ticket) {
+        daoFactory.createTicketDao().delete(ticket);
+    }
+
     public static void createTicket(Ticket ticket) {
         daoFactory.createTicketDao().create(ticket);
     }
