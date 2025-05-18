@@ -15,6 +15,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("log4j:log4j:1.2.16")
     implementation("org.postgresql:postgresql:42.7.5")
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
+    implementation("javax.servlet:jstl:1.2")
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly("javax.servlet:javax.servlet-api:3.0.1")
 }

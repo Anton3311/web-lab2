@@ -34,4 +34,7 @@ public abstract class DaoFactory {
 
         return instance;
     }
+
+    public abstract MovieDao createMovieDao();
+    public abstract TicketDao createTicketDao();
 }

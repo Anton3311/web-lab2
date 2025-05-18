@@ -2,10 +2,9 @@
 <title>Create Movie Session</title>
 <body>
     <form method="post">
-        <div style="display: flex; flex-direction: column">
-            <input type="text" placeholder="Movie Name"/>
-            <input type="number" placeholder="Number of seats"/>
-        </div>
+        <input type="text" name="movieName" placeholder="Movie Name"/>
+        <input type="number" name="seatCount" placeholder="Number of seats"/>
+        <button type="submit">Create</button>
     </form>
 </body>
 </html>

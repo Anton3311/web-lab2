@@ -2,6 +2,8 @@ package org.example.model.dao.jdbc;
 
 import org.apache.log4j.Logger;
 import org.example.model.dao.DaoFactory;
+import org.example.model.dao.MovieDao;
+import org.example.model.dao.TicketDao;
 import org.example.model.dao.exception.DaoException;
 
 import javax.naming.InitialContext;
@@ -29,5 +31,15 @@ public class JdbcDaoFactory extends DaoFactory {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public MovieDao createMovieDao() {
+        return new JdbcMovieDao(getConnection());
+    }
+
+    @Override
+    public TicketDao createTicketDao() {
+        return new JdbcTicketDao(getConnection());
     }
 }
