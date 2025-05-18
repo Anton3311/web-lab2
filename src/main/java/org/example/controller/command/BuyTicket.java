@@ -2,7 +2,6 @@ package org.example.controller.command;
 
 import org.apache.log4j.Logger;
 import org.example.model.dao.DaoFactory;
-import org.example.model.service.MovieService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
