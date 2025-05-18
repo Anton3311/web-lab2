@@ -1,27 +1,24 @@
 package org.example.controller.command;
 
 import org.example.controller.FrontController;
-import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
 import org.example.model.service.MovieService;
 import org.example.model.service.TicketService;
 import org.example.model.service.exception.ServiceException;
 import org.example.utils.*;
-import org.w3c.dom.Attr;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class UpdateTicket implements Command {
-    private class TicketUpdateData {
-        private int oldSeat;
-        private int newSeat;
+    private static class TicketUpdateData {
+        private final int oldSeat;
+        private final int newSeat;
 
         private TicketUpdateData(int oldSeat, int newSeat) {
             this.oldSeat = oldSeat;

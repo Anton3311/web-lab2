@@ -3,7 +3,6 @@ package org.example.model.service;
 import org.example.model.dao.DaoConnection;
 import org.example.model.dao.DaoFactory;
 import org.example.model.dao.MovieDao;
-import org.example.model.dao.exception.DaoException;
 import org.example.model.entity.Movie;
 import org.example.model.service.exception.ServiceException;
 
@@ -12,22 +11,6 @@ import java.util.Optional;
 
 public class MovieService {
     private static final DaoFactory daoFactory = DaoFactory.getInstance();
-
-    public static Optional<Movie> getById(int id) throws ServiceException {
-        try (DaoConnection connection = DaoFactory.getInstance().getConnection()) {
-            return daoFactory.createMovieDao(connection).findMovieById(id);
-        } catch (Exception e) {
-            throw new ServiceException(String.format("Failed to get a movie with id = %d", id), e);
-        }
-    }
-
-    public static Optional<Movie> getByName(String name) {
-        try (DaoConnection connection = DaoFactory.getInstance().getConnection()) {
-            return daoFactory.createMovieDao(connection).findMovieByName(name);
-        } catch (Exception e) {
-            throw new ServiceException(String.format("Failed to find a movie named '%s'", name), e);
-        }
-    }
 
     public static ArrayList<Movie> getAll() {
         try (DaoConnection connection = DaoFactory.getInstance().getConnection()) {

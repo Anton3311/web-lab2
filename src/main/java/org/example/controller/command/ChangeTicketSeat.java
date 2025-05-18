@@ -1,10 +1,8 @@
 package org.example.controller.command;
 
-import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.service.MovieService;
 import org.example.utils.AttributeConstants;
-import org.example.utils.URIUtils;
 import org.example.utils.ViewPathConstants;
 
 import javax.servlet.ServletException;

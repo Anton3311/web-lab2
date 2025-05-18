@@ -2,7 +2,6 @@ package org.example.model.service;
 
 import org.example.model.dao.DaoConnection;
 import org.example.model.dao.DaoFactory;
-import org.example.model.dao.exception.DaoException;
 import org.example.model.entity.Ticket;
 import org.example.model.service.exception.ServiceException;
 

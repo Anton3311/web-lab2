@@ -2,7 +2,6 @@ package org.example.controller.command;
 
 import org.apache.log4j.Logger;
 import org.example.controller.FrontController;
-import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
 import org.example.model.service.MovieService;
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class DeleteTicket implements Command {
-    private final Logger logger = Logger.getLogger(DeleteTicket.class);
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Movie> movie = MovieService.getMovieIdFromURI(request.getRequestURI());

@@ -2,7 +2,6 @@ package org.example.controller.command;
 
 import org.apache.log4j.Logger;
 import org.example.controller.FrontController;
-import org.example.model.dao.DaoFactory;
 import org.example.model.entity.Movie;
 import org.example.model.entity.Ticket;
 import org.example.model.service.MovieService;
