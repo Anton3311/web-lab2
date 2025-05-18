@@ -4,9 +4,7 @@
 <body>
     <%@include file="../header.jsp"%>
 
-    <h2>
-        <c:out value="Return ticket to ${requestScope[AttributeNameConstants.MOVIE_NAME]}" />
-    </h2>
+    <h2><c:out value="Return ticket to ${requestScope[AttributeConstants.MOVIE_NAME]}" /></h2>
 
     <form method="post">
         <input type="number" name="${ParameterNameConstants.SEAT_NUMBER}" placeholder="Seat Number">
