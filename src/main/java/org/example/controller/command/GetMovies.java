@@ -4,9 +4,11 @@ import org.apache.log4j.Logger;
 import org.example.model.service.MovieService;
 import org.example.utils.AttributeConstants;
 import org.example.utils.PagePathConstants;
+import org.example.utils.ViewPathConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 
 public class GetMovies implements Command {
     private final Logger logger = Logger.getLogger(GetMovies.class);
@@ -20,6 +22,6 @@ public class GetMovies implements Command {
         });
 
         request.setAttribute(AttributeConstants.MOVIES, movies);
-        return PagePathConstants.MOVIES_PAGE;
+        return ViewPathConstants.MOVIES;
     }
 }

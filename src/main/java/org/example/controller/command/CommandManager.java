@@ -7,7 +7,7 @@ public class CommandManager {
     private final HashMap<String, Command> commands = new HashMap<>();
 
     public CommandManager() {
-        commands.put(createCommandKey("get", "cinema/movies"), new GetMovies());
+        commands.put(createCommandKey("get", "cinema"), new GetMovies());
 
         commands.put(createCommandKey("get", "cinema/buyTicket"), new BuyTicket());
         commands.put(createCommandKey("post", "cinema/buyTicket"), new CreateTicket());
