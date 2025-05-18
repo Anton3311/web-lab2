@@ -14,7 +14,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("log4j:log4j:1.2.16")
-    implementation("org.xerial:sqlite-jdbc:3.49.1.0")
+    implementation("org.postgresql:postgresql:42.7.5")
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly("javax.servlet:javax.servlet-api:3.0.1")
 }

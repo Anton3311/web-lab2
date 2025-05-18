@@ -4,6 +4,7 @@ import org.example.controller.command.Command;
 import org.example.controller.command.CommandManager;
 
 import org.apache.log4j.Logger;
+import org.example.model.dao.DaoFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,8 @@ public class FrontController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+
+        DaoFactory.getInstance();
     }
 
     @Override
@@ -27,7 +30,7 @@ public class FrontController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        processRequest(req, resp);
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
