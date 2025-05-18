@@ -24,27 +24,46 @@ public class CreateTicket implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<String> errors = new ArrayList<>();
-        Ticket ticket = createTicketFromRequest(request, errors);
 
-        if (ticket != null) {
-            logger.info("Created ticket " + ticket);
+        Optional<Movie> movieFromURI = getMovieFromURI(request.getRequestURI());
 
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            response.sendRedirect(PagePathConstants.MOVIES_PAGE);
-            return FrontController.REDIRECT;
+        if (movieFromURI.isPresent()) {
+            Movie movie = movieFromURI.get();
+
+            Ticket ticket = createTicketFromRequest(movie, request, errors);
+
+            if (ticket != null) {
+                logger.info("Created ticket " + ticket);
+
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                response.sendRedirect(PagePathConstants.MOVIES_PAGE);
+                return FrontController.REDIRECT;
+            } else {
+                logger.error("Cannot create ticket");
+                errors.forEach(logger::error);
+
+                request.setAttribute(AttributeConstants.ERRORS, errors);
+                request.setAttribute(AttributeConstants.HAS_ERRORS, !errors.isEmpty());
+
+                return "/WEB-INF/view/ticket/buyTicket.jsp";
+            }
         } else {
-            logger.error("Cannot create ticket");
-            errors.forEach(logger::error);
-
-            request.setAttribute(AttributeConstants.ERRORS, errors);
-            request.setAttribute(AttributeConstants.HAS_ERRORS, !errors.isEmpty());
-
-            return "/WEB-INF/view/ticket/buyTicket.jsp";
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return "/WEB-INF/view/error/movieNotFound.jsp";
         }
     }
 
-    private Ticket createTicketFromRequest(HttpServletRequest request, ArrayList<String> errors) {
-        String movieName = request.getParameter(ParameterNameConstants.MOVIE_NAME);
+    private Optional<Movie> getMovieFromURI(String uri) {
+        try {
+            int movieId = Integer.parseInt(uri.substring(uri.lastIndexOf("/") + 1));
+
+            return MovieService.getById(movieId);
+        } catch (NumberFormatException _) {}
+
+        return Optional.empty();
+    }
+
+    private Ticket createTicketFromRequest(Movie movie, HttpServletRequest request, ArrayList<String> errors) {
         String seatNumberString = request.getParameter(ParameterNameConstants.SEAT_NUMBER);
 
         request.getParameterMap().forEach((key, value) -> logger.info(key + " " + Arrays.toString(value)));
@@ -57,24 +76,22 @@ public class CreateTicket implements Command {
             return null;
         }
 
-        Optional<Movie> movie = MovieService.getByName(movieName);
-        if (movie.isEmpty()) {
-            errors.add(String.format("Movie named '%s' doesn't exist", movieName));
-            return null;
-        }
-
-        boolean isSeatValid = seatNumber > 0 && seatNumber <= movie.get().getSeatCount();
+        boolean isSeatValid = seatNumber > 0 && seatNumber <= movie.getSeatCount();
         if (!isSeatValid) {
-            errors.add(String.format("Invalid seat number. Must be > 0 and <= %d", movie.get().getSeatCount()));
+            errors.add(String.format("Invalid seat number. Must be > 0 and <= %d", movie.getSeatCount()));
             return null;
         }
 
-        if (TicketService.ticketExists(movie.get().getId(), seatNumber)) {
+        logger.info("movie_id = " + movie.getId());
+        logger.info("seat = " + seatNumber);
+        boolean exists = TicketService.ticketExists(movie.getId(), seatNumber);
+        logger.info(exists);
+        if (exists) {
             errors.add(String.format("Seat number %d is already taken", seatNumber));
             return null;
         }
 
-        Ticket ticket = new Ticket(movie.get(), seatNumber);
+        Ticket ticket = new Ticket(movie, seatNumber);
         TicketService.createTicket(ticket);
         return ticket;
     }

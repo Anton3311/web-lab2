@@ -3,8 +3,12 @@
 <html>
 <body>
     <%@include file="../header.jsp"%>
+
+    <h2>
+        Buy a ticket to <c:out value="${requestScope[AttributeNameConstants.MOVIE_NAME]}" />
+    </h2>
+
     <form method="post">
-        <input type="text" name="${ParameterNameConstants.MOVIE_NAME}", placeholder="Movie Name">
         <input type="number" name="${ParameterNameConstants.SEAT_NUMBER}" placeholder="Seat Number">
         <button type="submit">Buy</button>
     </form>

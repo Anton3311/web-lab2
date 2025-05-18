@@ -39,9 +39,9 @@ public class FrontController extends HttpServlet {
         logger.info(request.getRequestURI());
 
         String method = request.getMethod().toLowerCase();
-        String commandName = request.getRequestURI().replaceFirst("/Lab2Cinema/", "");
+        String commandName = request.getRequestURI().replaceAll(RegExp.NUMBER, "").replaceFirst("/Lab2Cinema/", "");
         if (commandName.endsWith("/")) {
-            commandName = commandName.substring(0, commandName.length() - 2);
+            commandName = commandName.substring(0, commandName.length() - 1);
         }
 
         logger.info(method + " " + commandName);
