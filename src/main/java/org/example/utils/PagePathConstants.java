@@ -5,4 +5,5 @@ public class PagePathConstants {
     public static final String MOVIES_PAGE = PREFIX;
     public static final String BUY_TICKET = PREFIX + "buyTicket/";
     public static final String RETURN_TICKET = PREFIX + "returnTicket/";
+    public static final String CHANGE_SEAT = PREFIX + "changeSeat/";
 }

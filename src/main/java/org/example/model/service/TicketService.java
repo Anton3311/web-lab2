@@ -34,4 +34,12 @@ public class TicketService {
             throw new ServiceException("Failed to create a ticket: " + ticket, e);
         }
     }
+
+    public static void updateSeat(Ticket ticket, int newSeat) throws ServiceException {
+        try {
+            daoFactory.createTicketDao().updateSeat(ticket, newSeat);
+        } catch (DaoException e) {
+            throw new ServiceException("Failed to update seat for ticket: " + ticket + " to new seat " + newSeat);
+        }
+    }
 }

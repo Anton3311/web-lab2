@@ -54,4 +54,17 @@ public class JdbcTicketDao implements TicketDao {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public void updateSeat(Ticket ticket, int newSeat) throws DaoException {
+        try (PreparedStatement statement = connection.prepareStatement("update tickets set seat = ? where seat = ? and movie_id = ?")) {
+            statement.setInt(1, newSeat);
+            statement.setInt(2, ticket.getSeatNumber());
+            statement.setInt(3, ticket.getMovie().getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
 }

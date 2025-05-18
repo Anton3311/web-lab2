@@ -7,4 +7,5 @@ public class ViewPathConstants {
     public static final String PAGE_NOT_FOUND = PREFIX + "error/notFound.jsp";
     public static final String BUY_TICKET = PREFIX + "ticket/buyTicket.jsp";
     public static final String RETURN_TICKET = PREFIX + "ticket/returnTicket.jsp";
+    public static final String UPDATE_TICKET = PREFIX + "ticket/updateTicket.jsp";
 }
